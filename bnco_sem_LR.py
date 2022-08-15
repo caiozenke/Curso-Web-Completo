@@ -9,6 +9,7 @@ class Campeonato (db.Model):
         return f'Campeonato:{self.torneio}' #retornando o valor da tabela
 
 
+#A partir daqui Acontece o Erro!
 class Pessoa(db.Model):
     #definindo os valores
 
