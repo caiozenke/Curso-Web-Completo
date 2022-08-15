@@ -1,36 +1,55 @@
+
 from config import *
 
-class Pessoa(db.Model):
-    # atributos da pessoa
+class Casa (db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    formato = db.Column(db.String(254))
+    
+    def __str__(self):
+        return f'Casa: {self.formato}'
+        
+class Quarto(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(254))
-    email = db.Column(db.String(254))
-    telefone = db.Column(db.String(254))
+    dimensoes = db.Column(db.String(254))
 
-    # método para expressar a pessoa em forma de texto
+    casa_id = db.Column(db.Integer, db.ForeignKey(Casa.id), 
+                          nullable=False)
+    casa = db.relationship("Casa")
+
     def __str__(self):
-        return str(self.id)+") "+ self.nome + ", " +\
-            self.email + ", " + self.telefone
+        s = f'Quarto: {self.nome}, {self.dimensoes}, em: {str(self.casa)}'
+        s += f'na casa: {str(self.casa)}'          
+        return s
 
-# teste    
-if __name__ == "__main__":
-    # apagar o arquivo, se houver
-    if os.path.exists(arquivobd):
-        os.remove(arquivobd)
-
-    # criar tabelas
-    db.create_all()
-
-    # teste da classe Pessoa
-    p1 = Pessoa(nome = "João da Silva", email = "josilva@gmail.com", 
-        telefone = "47 99018 3232")
-    p2 = Pessoa(nome = "Maria Oliveira", email = "molive@gmail.com", 
-        telefone = "47 98822 2531")        
+if __name__ == "__main__": # teste das classes
     
-    # persistir
-    db.session.add(p1)
-    db.session.add(p2)
+    if os.path.exists(arquivobd): # se houver o arquivo...
+        os.remove(arquivobd) # ...apagar!
+
+    db.create_all() # criar tabelas
+
+    print("*** TESTE criando objetos")
+
+    c1 = Casa(formato="Germânica") # cria uma casa
+
+    # persiste para criar o id
+    db.session.add(c1)
     db.session.commit()
+
+    print(c1) # exibir atributos da casa
+
+    q1 = Quarto(nome="Sala", dimensoes="6x5 metros", casa=c1)
+    q2 = Quarto(nome="Banheiro", dimensoes="3x4 metros", casa=c1)
     
-    # exibir
-    print(p2)
+    db.session.add(q1)
+    db.session.add(q2)
+    db.session.commit()
+
+    print(q1, q2)
+
+    print("*** TESTE com todos os dados")
+    print(c1) # casa
+    # quartos da casa, sem lista reversa
+    for q in db.session.query(Quarto).filter(Quarto.casa_id == c1.id).all():
+        print(q)
