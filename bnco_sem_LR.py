@@ -3,15 +3,13 @@ from config import *
 
 class Campeonato (db.Model):
     id = db.Column(db.Integer, primary_key=True) #id do campeonato
-    
     torneio = db.Column(db.String(254)) 
 
     def __str__(self) -> str:
         return f'Campeonato:{self.torneio}' #retornando o valor da tabela
 
 
-
-class Jogador(db.Model):
+class Pessoa(db.Model):
     #definindo os valores
 
     id = db.Column(db.Integer, primary_key=True)
@@ -20,17 +18,14 @@ class Jogador(db.Model):
     rota = db.Column(db.String(254))
     equipe = db.Column(db.String(254))
 
-
-       
-    campeonato_id = db.Column(db.Integer, db.ForeignKey(Campeonato.id), 
-                                nullabel= False) #Criando Relação do Id com a Classe
+    campeonato_id = db.Column(db.Integer , db.ForeignKey(Campeonato.id),nullabel=False)
     campeonato = db.relationship("Campeonato")
-
-
-    def __str__(self) -> str:
+    def __str__(self):
         d = f'Jogador: {self.nome}, idade:{self.idade}, rota:{self.rota}, equipe:{self.equipe} em: {str(self.campeonato)}' #retornando os valores em str
         d += f'Campeonato = {self.campeonato}'
         return d
+
+
 
 if __name__ == '__main__':
 
@@ -45,5 +40,8 @@ if __name__ == '__main__':
 
     db.session.add(c1)
     db.session.commit()
+    
 
     print(c1)
+
+
