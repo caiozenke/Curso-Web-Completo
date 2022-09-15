@@ -1,3 +1,4 @@
+
 """
 -> É uma lista de listas de números inteiros
 -> As listas internas tem o tamanho de 10 elementos
@@ -13,6 +14,26 @@ Exercício
                 [1, 2, 3, 4, 5, 6] -> Retorne -1 (não tem duplicados)
             Se não encontrar duplicados na lista, retorne -1
 """
+
+
+def func(lista):
+    duplicados = -1
+    lista_set = set()
+    
+    for num in lista:
+        
+        if num in lista_set: #checando se o num esta no set
+            duplicados = num
+            break
+        
+        
+        lista_set.add(num)#jogando o numero no set
+    return duplicados
+
+
+
+
+
 lista_de_listas_de_inteiros = [
     [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     [9, 1, 8, 9, 9, 7, 2, 1, 6, 8],
@@ -28,19 +49,5 @@ lista_de_listas_de_inteiros = [
     [10, 9, 8, 7, 6, 5, 4, 3, 2, 1],
 ]
 
-def duplicados(lista):
-    set_duplicados = set()
-    primeiro_duplicado = -1
-
-    for num_duplicado in lista:
-       
-        if num_duplicado in set_duplicados:
-            primeiro_duplicado = num_duplicado
-            break
-        
-        
-        set_duplicados.add(num_duplicado)
-
-    return primeiro_duplicado
-for nump in lista_de_listas_de_inteiros:
-    print(nump,duplicados(nump))
+for v in lista_de_listas_de_inteiros:
+    print(v,func(v))
