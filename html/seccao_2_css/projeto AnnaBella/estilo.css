@@ -1,0 +1,36 @@
+a { 
+    text-decoration: none;
+    color: #4b566a;
+    font-weight: bold;
+    padding: 5px;
+}
+
+h3{
+    color:darkkhaki;
+}
+
+
+
+
+.menu{
+    background-color: #c5c5b2;
+    padding: 18px;
+}
+#rodapé{
+    font-weight: bold;
+    text-align: center;
+}
+#sobre{
+    background-color: antiquewhite;
+    font-weight: bolder;
+}
+#principal{
+    
+    width: 900px;
+    height: 500px;
+}
+#fundo{
+    background-image: url('imagens/fundo.png');
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+}
